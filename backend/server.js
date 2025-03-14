@@ -38,6 +38,10 @@ function fetchNews(url, res) {
     });
 }
 
+app.get("/", (req, res) => {
+    res.send("Welcome to NewsHub!!!");
+});
+
 // all-news
 app.get("/all-news", (req, res) => {
     let pageSize = parseInt(req.query.pageSize) || 40;
@@ -46,9 +50,9 @@ app.get("/all-news", (req, res) => {
     fetchNews(url, res);
 });
 
-// top-headlines
-app.options("/top-headlines", cors());
-app.get("/top-headlines", (req, res) => {
+// category
+app.options("/category-news", cors());
+app.get("/category-news", (req, res) => {
     let pageSize = parseInt(req.query.pageSize) || 40;
     let page = parseInt(req.query.page) || 1;
     let category = req.query.category || "business";
@@ -57,8 +61,8 @@ app.get("/top-headlines", (req, res) => {
 });
 
 // country
-app.options("/country/:iso", cors());
-app.get("/country/:iso", (req, res) => {
+app.options("/country-news/:iso", cors());
+app.get("/country-news/:iso", (req, res) => {
     let pageSize = parseInt(req.query.pageSize) || 40;
     let page = parseInt(req.query.page) || 1;
     let country = req.params.iso;

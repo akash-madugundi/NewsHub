@@ -1,22 +1,32 @@
-import { BrowserRouter, Route, Routes, useParams  } from "react-router-dom";
-import Header from "./components/Header";
-import AllNews from "./components/AllNews";
-import CategoryNews from "./components/CategoryNews";
-import CountryNews from "./components/CountryNews";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import Intro from "./components/pages/Intro";
+import AllNews from "./components/news/AllNews";
+import CategoryNews from "./components/news/CategoryNews";
+import CountryNews from "./components/news/CountryNews";
+import About from "./components/pages/About";
+import Contact from "./components/pages/Contact";
+import Privacy from "./components/pages/Privacy";
 import "./App.css";
 
 function App() {
   return (
-    <div>
-      <h1>Welcome to NewsHub!!!</h1>
+    <div className="flex flex-col min-h-screen">
       <BrowserRouter>
         <Header />
-        <Routes>
-          <Route path="/all-news" element={<AllNews />} />
-          <Route path="/category-news/:category" element={<CategoryNews />} />
-          <Route path="/country-news/:iso" element={<CountryNews />} />
-        </Routes>
-        {/* <Footer />   */}
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Intro />} />
+            <Route path="/all-news" element={<AllNews />} />
+            <Route path="/category-news/:category" element={<CategoryNews />} />
+            <Route path="/country-news/:iso" element={<CountryNews />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<Privacy />} />
+          </Routes>
+        </main>
+        <Footer />
       </BrowserRouter>
     </div>
   );

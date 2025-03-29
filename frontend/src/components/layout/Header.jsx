@@ -40,19 +40,19 @@ function Header() {
     <header className="bg-blue-600 shadow-lg py-4">
       <nav className="container mx-auto flex items-center justify-between px-6">
         <div className="flex items-center ml-6 space-x-5">
-          <Link to="/">
+          <Link to="/news">
             <img src="/logo.png" alt="NewsHub Logo" className="w-14 h-auto" />
           </Link>
           <h3 className="text-white text-2xl font-semibold">NewsHub</h3>
         </div>
         <ul className="hidden md:flex text-lg">
           <li className="px-8">
-            <Link to="/all-news" className="text-white hover:text-gray-300 transition">
+            <Link to="/news/all-news" className="text-white hover:text-gray-300 transition">
               All News
             </Link>
           </li>
-          <Dropdown title="Category" items={CATEGORIES} basePath="/category-news" isScrollable={true} />
-          <Dropdown title="Country" items={COUNTRIES} basePath="/country-news" isScrollable={true} />
+          <Dropdown title="Category" items={CATEGORIES} basePath="/news/category-news" isScrollable={true} />
+          <Dropdown title="Country" items={COUNTRIES} basePath="/news/country-news" isScrollable={true} />
         </ul>
 
         <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -64,12 +64,12 @@ function Header() {
         <div className="md:hidden bg-blue-700 text-white py-4 absolute w-full z-50 shadow-lg">
           <ul className="flex flex-col items-center space-y-3">
             <li>
-              <Link to="/all-news" className="text-white hover:text-gray-300 transition" onClick={() => setIsMenuOpen(false)}>
+              <Link to="/news/all-news" className="text-white hover:text-gray-300 transition" onClick={() => setIsMenuOpen(false)}>
                 All News
               </Link>
             </li>
-            <Dropdown title="Category" items={CATEGORIES} basePath="/category-news" isScrollable={true} />
-            <Dropdown title="Country" items={COUNTRIES} basePath="/country-news" isScrollable={true} />
+            <Dropdown title="Category" items={CATEGORIES} basePath="/news/category-news" isScrollable={true} />
+            <Dropdown title="Country" items={COUNTRIES} basePath="/news/country-news" isScrollable={true} />
           </ul>
         </div>
       )}

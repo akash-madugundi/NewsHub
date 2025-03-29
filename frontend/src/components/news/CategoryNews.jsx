@@ -18,7 +18,7 @@ function CategoryNews() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:8081/category-news?category=${category}&page=${page}&pageSize=${pageSize}`, {
+    fetch(`http://localhost:8081/news/category-news?category=${category}&page=${page}&pageSize=${pageSize}`, {
         method: "GET",
       })
       .then((response) => {

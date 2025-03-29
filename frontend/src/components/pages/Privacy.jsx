@@ -2,7 +2,7 @@ import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="container mx-auto px-6 py-10">
+    <div className="container mx-auto px-6 py-10 text-center">
       <h1 className="text-3xl font-bold text-blue-600">Privacy Policy</h1>
       <p className="mt-4 text-gray-700">
         Welcome to NewsHub. We value your privacy and are committed to protecting your personal information.

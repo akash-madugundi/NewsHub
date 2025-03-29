@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Login from "@/components/auth/Login";
 
 const Intro = () => {
   return (
-    <div>Intro</div>
+    <div>
+      Intro
+    </div>
   )
 }
 

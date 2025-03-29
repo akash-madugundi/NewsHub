@@ -12,13 +12,13 @@ const Footer = () => {
 
         <ul className="flex space-x-6 mt-4 md:mt-0">
           <li>
-            <Link to="/about" className="hover:text-gray-300 transition">About Us</Link>
+            <Link to="/news/about" className="hover:text-gray-300 transition">About Us</Link>
           </li>
           <li>
-            <Link to="/contact" className="hover:text-gray-300 transition">Contact</Link>
+            <Link to="/news/contact" className="hover:text-gray-300 transition">Contact</Link>
           </li>
           <li>
-            <Link to="/privacy" className="hover:text-gray-300 transition">Privacy Policy</Link>
+            <Link to="/news/privacy" className="hover:text-gray-300 transition">Privacy Policy</Link>
           </li>
         </ul>
 

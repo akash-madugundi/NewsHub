@@ -6,10 +6,11 @@ import CountryNews from "./components/news/CountryNews";
 import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import Privacy from "./components/pages/Privacy";
-import Register from "./components/auth/Register";
-import Login from "./components/auth/Login";
+import SignUp from "./components/auth/SignUp";
+import SignIn from "./components/auth/SignIn";
 import AuthLayout from "./layout/AuthLayout";
 import DashboardLayout from "./layout/DashboardLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
 function App() {
@@ -18,11 +19,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Intro />}></Route>
         <Route path="/auth/*" element={<AuthLayout />}>
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
+          <Route path="sign-up" element={<SignUp />} />
+          <Route path="sign-in" element={<SignIn />} />
+          <Route path="sign-out" element={<SignIn />} />
         </Route>
 
-        <Route path="/news/*" element={<DashboardLayout />}>
+        <Route path="/news/*" element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }>
           <Route path="all-news" element={<AllNews />} />
           <Route path="category-news/:category" element={<CategoryNews />} />
           <Route path="country-news/:iso" element={<CountryNews />} />

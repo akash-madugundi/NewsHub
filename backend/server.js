@@ -1,8 +1,8 @@
 import express, { json, urlencoded } from "express";
-import { connectDB } from "./config/db.js";
+import cors from "cors";
+import { connectDB } from "./config/dbConfig.js";
 import authRoutes from "./routes/auth.js";
 import newsRoutes from "./routes/newsApi.js";
-import cors from "cors";
 
 // Connect to PostgreSQL
 connectDB();

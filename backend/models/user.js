@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/db.js";
+import { sequelize } from "../config/dbConfig.js";
 
 const User = sequelize.define("users", {
   id: {
@@ -18,8 +18,8 @@ const User = sequelize.define("users", {
     allowNull: false,
   },
 }, {
-  tableName: "users",  // Ensure Sequelize uses the correct table name
-  timestamps: false,   // 👈 Disable createdAt and updatedAt
+  tableName: "users",
+  timestamps: false,
 });
 
 export default User;

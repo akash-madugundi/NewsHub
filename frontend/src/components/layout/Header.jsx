@@ -36,6 +36,11 @@ function Dropdown({ title, items, basePath, isScrollable = false }) {
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/auth/sign-in"
+  }
+
   return (
     <header className="bg-blue-600 shadow-lg py-4">
       <nav className="container mx-auto flex items-center justify-between px-6">
@@ -53,6 +58,11 @@ function Header() {
           </li>
           <Dropdown title="Category" items={CATEGORIES} basePath="/news/category-news" isScrollable={true} />
           <Dropdown title="Country" items={COUNTRIES} basePath="/news/country-news" isScrollable={true} />
+          <li className="px-8">
+            <Link onClick={handleSignOut} className="text-white hover:text-gray-300 transition">
+              Sign Out
+            </Link>
+          </li>
         </ul>
 
         <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -70,6 +80,17 @@ function Header() {
             </li>
             <Dropdown title="Category" items={CATEGORIES} basePath="/news/category-news" isScrollable={true} />
             <Dropdown title="Country" items={COUNTRIES} basePath="/news/country-news" isScrollable={true} />
+            <li className="px-8">
+              <Link 
+                onClick={() => {
+                  handleSignOut(); 
+                  setIsMenuOpen(false);
+                }} 
+                className="text-white hover:text-gray-300 transition"
+              >
+                Sign Out
+              </Link>
+            </li>
           </ul>
         </div>
       )}

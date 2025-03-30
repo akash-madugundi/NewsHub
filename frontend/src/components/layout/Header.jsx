@@ -48,7 +48,9 @@ function Header() {
           <Link to="/news">
             <img src="/logo.png" alt="NewsHub Logo" className="w-14 h-auto" />
           </Link>
-          <h3 className="text-white text-2xl font-semibold">NewsHub</h3>
+          <h3 className="text-white text-3xl font-semibold" style={{ fontFamily: 'Courier New, monospace' }}>NewsHub</h3>
+
+          
         </div>
         <ul className="hidden md:flex text-lg">
           <li className="px-8">

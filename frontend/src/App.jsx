@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Intro from "./components/pages/Intro";
+import Home from "./components/pages/Home";
 import AllNews from "./components/news/AllNews";
 import CategoryNews from "./components/news/CategoryNews";
 import CountryNews from "./components/news/CountryNews";
@@ -17,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Intro />}></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route path="/auth/*" element={<AuthLayout />}>
           <Route path="sign-up" element={<SignUp />} />
           <Route path="sign-in" element={<SignIn />} />
@@ -29,6 +29,7 @@ function App() {
               <DashboardLayout />
             </ProtectedRoute>
           }>
+          <Route index element={<Home />} />
           <Route path="all-news" element={<AllNews />} />
           <Route path="category-news/:category" element={<CategoryNews />} />
           <Route path="country-news/:iso" element={<CountryNews />} />

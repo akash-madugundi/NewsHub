@@ -1,8 +1,11 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 dotenv.config();
 
+// const generateSecret = () => crypto.randomBytes(32).toString("hex");
+// const jwtSecret = process.env.JWT_SECRET || generateSecret();
 const jwtSecret = process.env.JWT_SECRET;
 
 const jwtConfig = {

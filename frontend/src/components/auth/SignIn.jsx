@@ -18,6 +18,7 @@ const SignIn = () => {
       }
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       alert(data.message);
       window.location.href = "/news";
     } catch (error) {

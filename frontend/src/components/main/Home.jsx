@@ -40,6 +40,10 @@ function Home() {
                 isScrollable={true}
               >
               </Card>
+            ) : category.title === "Editorial" ? (
+              <Link key={index} to="/news/editorial-news">
+                <Card image={category.image} title={category.title} />
+              </Link>
             ) : null
           )}
         </div>

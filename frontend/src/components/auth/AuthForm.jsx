@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import InputField from "./InputField";
 import styles from "./styles/AuthForm.module.css";
@@ -5,7 +6,7 @@ import styles from "./styles/AuthForm.module.css";
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const AuthForm = ({ onSubmit, isSignUp }) => {
+const AuthForm = ({ onSubmit, isSignUp, isAdmin=false }) => {
   const userRef = useRef();
   const errRef = useRef();
 
@@ -52,12 +53,18 @@ const AuthForm = ({ onSubmit, isSignUp }) => {
   };
 
   return (
-    <section className={`${styles.section} ${isSignUp ? styles.signUp : styles.signIn}`}>
-      <p ref={errRef} className={errMsg ? styles.errmsg : styles.none}>{errMsg}</p>
-      <h1>{isSignUp ? "Sign Up" : "Sign In"}</h1>
+    <section
+      className={`${styles.section} ${
+        isSignUp ? styles.signUp : styles.signIn
+      }`}
+    >
+      <p ref={errRef} className={errMsg ? styles.errmsg : styles.none}>
+        {errMsg}
+      </p>
+      <h1>{isAdmin ? "Admin Sign In" : isSignUp ? "Sign Up" : "Sign In"}</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <InputField
-          label="Email:"
+          label={isAdmin ? "Admin Email:" : "Email:"}
           id="email"
           type="text"
           value={email}
@@ -71,7 +78,7 @@ const AuthForm = ({ onSubmit, isSignUp }) => {
         />
 
         <InputField
-          label="Password:"
+          label={isAdmin ? "Admin Password:" : "Password:"}
           id="password"
           type="password"
           value={password}
@@ -99,10 +106,31 @@ const AuthForm = ({ onSubmit, isSignUp }) => {
         )}
 
         <div className={styles.btnContainer}>
-          <button className={styles.btn} disabled={!validEmail || !validPassword || (isSignUp && !validMatch)}>
+          <button
+            className={styles.btn}
+            disabled={
+              !validEmail || !validPassword || (isSignUp && !validMatch)
+            }
+          >
             {isSignUp ? "Sign Up" : "Sign In"}
           </button>
         </div>
+
+        {isSignUp ? (
+          <p className={styles.signUpBox}>
+            Already registered?
+            <span className={styles.sign}>
+              <Link to="/auth/sign-in">Sign In</Link>
+            </span>
+          </p>
+        ) : (
+          <p className={styles.signInBox}>
+            Want to register?
+            <span className={styles.sign}>
+              <Link to="/auth/sign-up">Sign Up</Link>
+            </span>
+          </p>
+        )}
       </form>
     </section>
   );

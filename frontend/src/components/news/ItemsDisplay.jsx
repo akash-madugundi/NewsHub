@@ -1,7 +1,7 @@
 import React from "react";
 import NewsItem from "./NewsItem";
 
-const ItemsDisplay = ({ NewsType }) => {
+const ItemsDisplay = ({ NewsType, isEditorial = false }) => {
   return (
     <div className="container mx-auto px-6 py-6">
       {NewsType.length > 0 ? (
@@ -11,11 +11,11 @@ const ItemsDisplay = ({ NewsType }) => {
               key={index}
               title={item.title}
               description={item.description}
-              imgUrl={item.urlToImage}
-              publishedAt={item.publishedAt}
+              imgUrl={!isEditorial ? item.urlToImage : item.imgurl}
+              publishedAt={!isEditorial ? item.publishedAt : item.publishedat}
               url={item.url}
               author={item.author}
-              source={item.source.name}
+              source={!isEditorial ? item.source.name : item.source}
             />
           ))}
         </div>

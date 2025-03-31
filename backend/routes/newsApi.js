@@ -1,6 +1,7 @@
 import { Router } from "express";
 import axios from "axios";
 import cors from "cors";
+import { pool } from "../config/dbConfig.js";
 const router = Router();
 
 const API_KEY = process.env.API_KEY;
@@ -60,6 +61,31 @@ router.get("/country-news/:iso", (req, res) => {
   let country = req.params.iso;
   let url = `https://newsapi.org/v2/top-headlines?country=${country}&page=${page}&pageSize=${pageSize}&apiKey=${API_KEY}`;
   fetchNews(url, res);
+});
+
+router.get("/editorial-news", async (req, res) => {
+  try {
+    const pageSize = parseInt(req.query.pageSize) || 40;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * pageSize;
+
+    const query = `
+        SELECT * FROM news_articles
+        ORDER BY publishedAt DESC
+        LIMIT $1 OFFSET $2;
+    `;
+    
+    const result = await pool.query(query, [pageSize, offset]);
+    res.status(200).json({
+        page,
+        pageSize,
+        total: result.rows.length,
+        news: result.rows,
+    });
+  } catch (error) {
+      console.error("Error fetching editorial news:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 export default router;

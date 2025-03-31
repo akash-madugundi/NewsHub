@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
+import pkg from "pg";
 
+const { Pool } = pkg;
 dotenv.config();
 
 const config = {
@@ -27,14 +29,33 @@ const sequelize = new Sequelize(
   }
 );
 
+const pool = new Pool({
+  user: db.username,
+  password: db.password,
+  database: db.database,
+  host: db.host,
+  port: db.port,
+  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false,
+});
+
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log(`Connected to PostgreSQL Database: ${db.database} at ${db.host}`);
+    console.log(`Connected to PostgreSQL Database: ${db.database} at ${db.host} using Sequelize`);
   } catch (err) {
     console.error("Failed to connect to DB:", err);
     process.exit(1);
   }
 };
 
-export { config, sequelize, connectDB };
+const testPoolConnection = async () => {
+  try {
+    const client = await pool.connect();
+    console.log("Connected to PostgreSQL using pg Pool");
+    client.release();
+  } catch (err) {
+    console.error("Failed to connect using pg Pool:", err);
+  }
+};
+
+export { config, sequelize, pool, connectDB, testPoolConnection };

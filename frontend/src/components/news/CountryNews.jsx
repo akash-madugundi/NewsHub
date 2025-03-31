@@ -32,8 +32,8 @@ function CountryNews() {
         if (!json.success) {
           throw new Error(json.message || "API response error");
         }
-        setTotalResults(json.data.totalResults);
-        setCountryNews(json.data.articles);
+        setTotalResults(json?.data?.totalResults || 0);
+        setCountryNews(json?.data?.articles || []);
       })
       .catch((err) => console.error("Error fetching news: ", err))
       .finally(() => {

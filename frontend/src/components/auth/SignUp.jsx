@@ -31,10 +31,10 @@ const SignUp = () => {
 
       <AuthForm onSubmit={handleSignUp} isSignUp={true} />
 
-      <p className={styles.signBox}>
-        Already registered?
-        <span className={styles.sign}>
-          <Link to="/auth/sign-in">Sign In</Link>
+      <p className={styles.adminBox}>
+        Admin?
+        <span className={styles.admin}>
+          <Link to="/auth/admin">Click Here</Link>
         </span>
       </p>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer = ({ isAdmin = false }) => {
   return (
     <footer className="bg-blue-700 text-white py-6 mt-6">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
@@ -12,13 +12,13 @@ const Footer = () => {
 
         <ul className="flex space-x-6 mt-4 md:mt-0">
           <li>
-            <Link to="/news/about" className="hover:text-gray-300 transition">About Us</Link>
+            <Link to={isAdmin ? "/admin/about" : "/news/about"} className="hover:text-gray-300 transition">About Us</Link>
           </li>
           <li>
-            <Link to="/news/contact" className="hover:text-gray-300 transition">Contact</Link>
+            <Link to={isAdmin ? "/admin/contact" : "/news/contact"} className="hover:text-gray-300 transition">Contact</Link>
           </li>
           <li>
-            <Link to="/news/privacy" className="hover:text-gray-300 transition">Privacy Policy</Link>
+            <Link to={isAdmin ? "/admin/privacy" : "/news/privacy"} className="hover:text-gray-300 transition">Privacy Policy</Link>
           </li>
         </ul>
 

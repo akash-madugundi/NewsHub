@@ -35,6 +35,21 @@
     padding-top: 4.5rem;
 }
 
+.signUpBox {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0.7rem;
+}
+
+.signInBox {
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 2.7rem;
+}
+
+.sign {
+    margin-left: 10px;
+    text-decoration: underline;
+}
+
 .none {
     display: none;
 }

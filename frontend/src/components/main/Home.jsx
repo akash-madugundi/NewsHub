@@ -11,13 +11,13 @@ const categories = [
   { title: "Editorial", image: "/editorial.jpg" },
 ];
 
-function Home() {
+function Home({ isAdmin = false }) {
   return (
       <main className="flex-grow flex flex-col items-center justify-center p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 pt-5 w-full max-w-6xl gap-y-5 md:gap-y-10 lg:gap-y-15 gap-x-0 md:gap-x-10 lg:gap-x-30">
           {categories.map((category, index) =>
             category.title === "All" ? (
-              <Link key={index} to="/news/all-news">
+              <Link key={index} to={isAdmin ? "/admin/all-news" : "/news/all-news"}>
                 <Card image={category.image} title={category.title} />
               </Link>
             ) : category.title === "Categorical" ? (
@@ -26,7 +26,7 @@ function Home() {
                 image={category.image} 
                 title={category.title}
                 items={CATEGORIES}
-                basePath="/news/category-news"
+                basePath={isAdmin ? "/admin/category-news" : "/news/category-news"}
                 isScrollable={true}
               >
               </Card>
@@ -36,12 +36,12 @@ function Home() {
                 image={category.image} 
                 title={category.title}
                 items={COUNTRIES}
-                basePath="/news/country-news"
+                basePath={isAdmin ? "/admin/country-news" : "/news/country-news"}
                 isScrollable={true}
               >
               </Card>
             ) : category.title === "Editorial" ? (
-              <Link key={index} to="/news/editorial-news">
+              <Link key={index} to={isAdmin ? "/admin/editorial-news" : "/news/editorial-news"}>
                 <Card image={category.image} title={category.title} />
               </Link>
             ) : null

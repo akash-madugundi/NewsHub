@@ -1,0 +1,208 @@
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/dbConfig.js";
+import User from "./user.js";
+
+const article = sequelize.define("article", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: User,
+      key: "id",
+    },
+    onDelete: "CASCADE",
+  },
+  title: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  url: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    unique: "userarticleUnique",
+  },
+  image_url: {
+    type: DataTypes.TEXT,
+  },
+  published_at: {
+    type: DataTypes.DATE,
+  },
+  source: {
+    type: DataTypes.TEXT,
+  },
+  author: {
+    type: DataTypes.TEXT,
+  },
+  description: {
+    type: DataTypes.TEXT,
+  },
+}, {
+  tableName: "article",
+  timestamps: false,
+  indexes: [
+    {
+      unique: true,
+      fields: ["user_id", "url"],
+      name: "userarticleUnique",
+    },
+  ],
+});
+
+User.hasMany(article, { foreignKey: "user_id", onDelete: "CASCADE" });
+article.belongsTo(User, { foreignKey: "user_id" });
+
+export default article;
+// article.js
+
+user: { id: existingUser.id, email: existingUser.email }
+// auth.js
+
+CREATE TABLE articles (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    url TEXT NOT NULL,
+    image_url TEXT,
+    published_at TIMESTAMP,
+    source TEXT,
+    author TEXT,
+    description TEXT,
+    UNIQUE(user_id, url) -- Ensures a user can't save the same article multiple times
+);
+// sql
+
+router.post("/save-article", async (req, res) => {
+  try {
+    const { title, url, image_url, published_at, source, author, description, user_id } = req.body;
+
+    if (!user_id || !url) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const result = await pool.query(
+      "INSERT INTO saved_articles (user_id, title, url, image_url, published_at, source, author, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ON CONFLICT (user_id, url) DO NOTHING RETURNING *",
+      [user_id, title, url, image_url, published_at, source, author, description]
+    );
+
+    if (result.rowCount === 0) {
+      return res.json({ message: "Article already saved" });
+    }
+
+    res.json({ message: "Article saved successfully", article: result.rows[0] });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+//newsApi.js
+
+import React, { useState } from "react";
+import NewsItem from "./NewsItem";
+import axios from "axios";
+
+const ItemsDisplay = ({ NewsType }) => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const saveArticle = async (article) => {
+    if (!user) {
+      alert("Please log in to save articles!");
+      return;
+    }
+
+    console.log(article);
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/news/save-article",
+        {
+          title: article.title,
+          url: article.url,
+          image_url: article.imgUrl,
+          published_at: article.publishedAt,
+          source: article.source,
+          author: article.author,
+          description: article.description,
+          user_id: user.user.id
+        }
+      );
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error saving article:", error);
+      alert("Error saving article!");
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-6 py-6">
+      {NewsType.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {NewsType.map((item, index) => (
+            <NewsItem
+              key={index}
+              title={item.title}
+              description={item.description}
+              imgUrl={item.urlToImage}
+              publishedAt={item.publishedAt}
+              url={item.url}
+              author={item.author}
+              source={item.source.name}
+              saveArticle={saveArticle}
+            />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 text-lg">Loading news...</p>
+      )}
+    </div>
+  );
+};
+
+export default ItemsDisplay;
+// ItemsDisplay.jsx
+
+<p className="text-gray-500 text-xs mt-2">Source: <span className="font-semibold">{source}</span></p>
+<p className="text-gray-500 text-xs">Author: {author || "Unknown"}</p>
+<p className="text-gray-500 text-xs">Published: {new Date(publishedAt).toLocaleDateString()}</p>
+
+<button 
+    className="mt-3 w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+    onClick={() => saveArticle({ title, url, imgUrl, publishedAt, source, author, description })}
+>
+  Read Later
+</button>
+// NewsItem.jsx
+
+import React, { useState, useEffect } from "react";
+import NewsItem from "./NewsItem";
+
+function NewsList({ articles }) {
+  const [page, setPage] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  let pageSize = 10;
+
+  return (
+    <>
+      {!isLoading ? (
+        <div className="container mx-auto px-6 py-6">
+          <ItemsDisplay NewsType={allNews}/>
+          <PageNavigation
+            page={page}
+            totPages={Math.ceil(totalResults / pageSize)}
+            setPage={setPage}
+          />
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-[75vh]">
+          <CircularIndeterminate />
+        </div>
+      )}
+    </>
+  );
+}
+
+export default NewsList;
+// ReadLaterNews.jsx

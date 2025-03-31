@@ -49,7 +49,7 @@ router.post("/sign-in", async (req, res) => {
       success: true, 
       message: "Login successful! Redirecting...", 
       token,
-      user: { email: existingUser.email }
+      user: { id: existingUser.id, email: existingUser.email }
     });
   } catch (error) { 
     res.status(500).json({ 

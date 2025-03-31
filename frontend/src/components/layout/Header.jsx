@@ -7,6 +7,7 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSignOut = () => {
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
     window.location.href = "/auth/sign-in";
   };

@@ -17,8 +17,7 @@ const SignIn = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("user", JSON.stringify(data));
       alert(data.message);
       window.location.href = "/news";
     } catch (error) {

@@ -35,7 +35,7 @@ function Header({ isAdmin = false }) {
         </button>
 
         <ul className="hidden md:flex text-lg space-x-20 mr-15 items-center">
-          {isAdmin &&
+          {isAdmin && (
             <li>
               <Link
                 to="/admin/add-news"
@@ -44,7 +44,7 @@ function Header({ isAdmin = false }) {
                 <Plus size={27} />
               </Link>
             </li>
-          }
+          )}
           <li>
             <Link
               to={isAdmin ? "/admin" : "/news"}
@@ -71,7 +71,9 @@ function Header({ isAdmin = false }) {
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg overflow-hidden z-10">
                 <Link
-                  onClick={() => { setDropdownOpen(false); }}
+                  onClick={() => {
+                    setDropdownOpen(false);
+                  }}
                   to={isAdmin ? "/admin/profile" : "/news/profile"}
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
                 >
@@ -92,7 +94,22 @@ function Header({ isAdmin = false }) {
         <div className="md:hidden bg-blue-600 w-full absolute top-16 left-0 z-10 shadow-lg">
           <ul className="flex flex-col items-center space-y-6 py-4">
             <li>
-              <Link to={isAdmin ? "/admin" : "/news"} onClick={() => setMenuOpen(false)} className="text-white flex items-center space-x-2">
+              {isAdmin && (
+                <Link
+                  to="/admin/add-news"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-white flex items-center space-x-2"
+                >
+                  <Plus size={27} /> <span>Add News</span>
+                </Link>
+              )}
+            </li>
+            <li>
+              <Link
+                to={isAdmin ? "/admin" : "/news"}
+                onClick={() => setMenuOpen(false)}
+                className="text-white flex items-center space-x-2"
+              >
                 <Home size={27} /> <span>Home</span>
               </Link>
             </li>
@@ -102,13 +119,30 @@ function Header({ isAdmin = false }) {
               </Link>
             </li> */}
             <li className="relative">
-              <button onClick={() => setDropdownOpen(!dropdownOpen)} className="text-white flex items-center space-x-2">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="text-white flex items-center space-x-2"
+              >
                 <User size={27} /> <span>Profile</span>
               </button>
               {dropdownOpen && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-40 bg-white rounded-lg shadow-lg z-10">
-                  <Link onClick={() => { setDropdownOpen(false); setMenuOpen(false); }} to={isAdmin ? "/admin/profile" : "/news/profile"} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">My Profile</Link>
-                  <button onClick={handleSignOut} className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200">Sign Out</button>
+                  <Link
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      setMenuOpen(false);
+                    }}
+                    to={isAdmin ? "/admin/profile" : "/news/profile"}
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                  >
+                    My Profile
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200"
+                  >
+                    Sign Out
+                  </button>
                 </div>
               )}
             </li>

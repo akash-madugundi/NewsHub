@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import CircularIndeterminate from "../layout/Loader";
 
 const AddNews = () => {
@@ -16,10 +15,37 @@ const AddNews = () => {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate()
+  const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState(null);
 
   const handleChange = (e) => {
     setNewsData({ ...newsData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setPreview(URL.createObjectURL(file));
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "NewsHub");
+      data.append("cloud_name", "dkigaei9n");
+
+      try {
+        const res = await fetch("https://api.cloudinary.com/v1_1/dkigaei9n/image/upload", {
+          method: "POST",
+          body: data,
+        });
+  
+        const imgData = await res.json();
+        if (imgData.url) {
+          handleChange({ target: { name: "imgUrl", value: imgData.url } });
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -53,6 +79,8 @@ const AddNews = () => {
         author: "",
         source: "",
       });
+      setImageFile(null);
+      setPreview(null);
       setTimeout(() => {
         setMessage(null);
       }, 5000);
@@ -72,7 +100,7 @@ const AddNews = () => {
   }
 
   return (
-    <div className="flex justify-center m-12 items-center h-[75vh]">
+    <div className="flex justify-center m-38 items-center h-[75vh]">
       {message || error ? (
         <div
           className={`text-center text-3xl ${
@@ -80,13 +108,14 @@ const AddNews = () => {
           }`}
         >
           {message || error}
-          <p className="text-gray-400 text-lg mt-2 font-mono italic">Redirecting in 5 seconds...</p>
+          <p className="text-gray-400 text-lg mt-2 font-mono italic">
+            Redirecting in 5 seconds...
+          </p>
         </div>
       ) : (
         <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
           <h2 className="text-3xl font-bold mb-4 text-center">Add News</h2>
-          {message && <p className="text-green-500">{message}</p>}
-          {error && <p className="text-red-500">{error}</p>}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
@@ -105,14 +134,45 @@ const AddNews = () => {
               className="w-full p-2 border rounded"
               required
             />
+
             <input
               type="text"
               name="imgUrl"
               value={newsData.imgUrl}
               onChange={handleChange}
-              placeholder="Image URL"
+              placeholder="Image URL (or upload below)"
               className="w-full p-2 border rounded"
             />
+
+            <label className="w-full flex items-center justify-center p-4 bg-gray-200 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-300 transition">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              <span className="font-semibold">📁 Choose Image</span>
+            </label>
+
+            {preview || newsData.imgUrl ? (
+              <div className="relative mt-2">
+                <img
+                  src={preview || newsData.imgUrl}
+                  alt="Preview"
+                  className="w-full h-40 object-cover rounded"
+                />
+
+                <a
+                  href={preview || newsData.imgUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-2 right-2 bg-white p-1 rounded-full shadow-md hover:bg-gray-100 transition"
+                >
+                  <span className="text-blue-500 font-bold">🔍</span>{" "}
+                </a>
+              </div>
+            ) : null}
+
             <input
               type="datetime-local"
               name="publishedAt"
@@ -150,7 +210,6 @@ const AddNews = () => {
             <button
               type="submit"
               className="w-30 p-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:text-gray-300 transition mx-auto block hover:shadow-lg hover:border border-gray-300"
-              disabled={isLoading}
             >
               Add News
             </button>

@@ -10,11 +10,11 @@ const AuthForm = ({ onSubmit, isSignUp, isAdmin=false }) => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(isAdmin ? "admin@gmail.com" : "");
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(isAdmin ? "Admin@1234" : "");
   const [validPassword, setValidPassword] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
 

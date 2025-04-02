@@ -26,6 +26,7 @@
 - NewsAPI.org Integration for fetching live news.
 - Implemented Sequelize and Pool for PostgreSQL database management.
 - JWT-Based Authentication for secure access control.
+- Secure /news routes, ensuring only authenticated users can access.
 - Cloudinary Integration for storing and retrieving images.
 - Botpress AI Bot for answering FAQs.
 
@@ -43,21 +44,32 @@ git clone <repository-url>
 cd NewsHub
 ```
 
-#### Install dependencies:
+#### Install dependencies: *(in frontend and backend folders)*
 ```
-yet_to_write
+npm install
 ```
 
-#### Set up environment variables (.env file):
+#### Set up environment variables (.env file): *(in backend folder)*
 ```bash
-yet_to_write
+API_KEY=your_newsapi_key
+PORT=8081
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_NAME=NewsHub
+DB_PORT=5432
+DB_HOST=your_db_host
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=6h
+ADMIN_EMAIL = admin@gmail.com
+ADMIN_PASSWORD_HASH = $2b$10$JzHsrlb5Ysiu5HWA2M7B8uFSQSjFfkNpSnX2F7l2NsIeZlqfMYRpm
 ```
-#### Run the backend:
+
+#### Run the backend: *(in backend folder)*
 ```
 node server.js
 ```
 
-#### Run the frontend:
+#### Run the frontend: *(in frontend folder)*
 ```
 npm run dev
 ```
@@ -75,6 +87,11 @@ npm run dev
   - **Testing**: Postman
 
 ---
+
+## Future Enhancements
+- **"Read Later" Feature**: Allow users to save news articles.
+- **Google Sign-In**: Enable easy authentication using Google accounts.
+- **Personalized AI Chatbot**: Enhance user engagement with an AI-powered assistant.
 
 ## License
   - This project is licensed under the MIT License

@@ -2,6 +2,8 @@
 
 **NewsHub** is a full-stack web application that provides users with the latest news from various categories and countries while allowing admins to manage editorial content. It features *authentication*, *dynamic news fetching*, and a *chatbot* for user engagement.
 
+#### 🌐 Live Demo - [NewsHub Website](https://newshub-c5r7.onrender.com)
+
 ---
 
 ## Features

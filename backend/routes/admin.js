@@ -14,7 +14,7 @@ router.post("/add-news", async (req, res) => {
         }
         
         const query = `
-            INSERT INTO news_articles (title, description, imgUrl, publishedAt, url, author, source)
+            INSERT INTO news_articles (title, description, imgurl, publishedat, url, author, source)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *;
         `;

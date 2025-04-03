@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Home, Bookmark, User, Menu, X, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Header({ isAdmin = false }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    window.location.href = "/auth/sign-in";
+    navigate("/auth/sign-in", { replace: true });
   };
 
   return (

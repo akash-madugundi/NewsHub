@@ -25,7 +25,14 @@ const sequelize = new Sequelize(
   {
     host: db.host,
     dialect: db.dialect,
+    port: db.port,
     logging: false,
+    dialectOptions: {
+      ssl: process.env.DB_SSL === "true" ? {
+        require: true,
+        rejectUnauthorized: false
+      } : false
+    }
   }
 );
 

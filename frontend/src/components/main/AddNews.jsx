@@ -66,6 +66,9 @@ const AddNews = () => {
       const data = await response.json();
 
       if (!response.ok) {
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
         throw new Error(data.message || "Failed to add news");
       }
 

@@ -5,7 +5,7 @@ import styles from "./styles/SignUpIn.module.css";
 const SignIn = () => {
   const handleSignIn = async ({ email, password }) => {
     try {
-      const response = await fetch("http://localhost:8081/auth/sign-in", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/sign-in`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

@@ -12,7 +12,7 @@ function EditorialNews() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`http://localhost:8081/news/editorial-news?page=${page}&pageSize=${pageSize}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/news/editorial-news?page=${page}&pageSize=${pageSize}`, {
       method: "GET",
     })
       .then((response) => {

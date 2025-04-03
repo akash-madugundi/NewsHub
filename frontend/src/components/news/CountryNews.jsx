@@ -19,7 +19,7 @@ function CountryNews() {
   useEffect(() => {
     // console.log("Fetching news for country: ", iso);
     setIsLoading(true);
-    fetch(`http://localhost:8081/news/country-news/${iso}?page=${page}&pageSize=${pageSize}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/news/country-news/${iso}?page=${page}&pageSize=${pageSize}`, {
         method: "GET",
       })
       .then((response) => {

@@ -55,7 +55,7 @@ const AddNews = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8081/admin/add-news", {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/admin/add-news`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

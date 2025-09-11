@@ -32,6 +32,8 @@
 - Cloudinary Integration for storing and retrieving images.
 - Botpress AI Bot for answering FAQs.
 
+> ⚠️ **Note:** *Signing in takes a minimum of 50 seconds because the free instance spins down due to inactivity, causing delays of 50 seconds or more.*
+
 ---
 
 ## Installation & Setup

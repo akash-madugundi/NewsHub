@@ -51,7 +51,8 @@ cd NewsHub
 npm install
 ```
 
-#### Set up environment variables (.env file): *(in backend folder)*
+#### Set up environment variables (.env file): 
+*(in backend folder)*
 ```bash
 API_KEY=your_newsapi_key
 PORT=8081
@@ -60,10 +61,16 @@ DB_PASS=your_db_password
 DB_NAME=NewsHub
 DB_PORT=5432
 DB_HOST=your_db_host
+DB_SSL=true   # `false` for local setup
 JWT_SECRET=your_jwt_secret
 JWT_EXPIRES_IN=6h
 ADMIN_EMAIL = admin@gmail.com
 ADMIN_PASSWORD_HASH = $2b$10$JzHsrlb5Ysiu5HWA2M7B8uFSQSjFfkNpSnX2F7l2NsIeZlqfMYRpm
+```
+
+*(in frontend folder)*
+```bash
+VITE_BACKEND_URL=     # `http://localhost:8081` for local setup
 ```
 
 #### Run the backend: *(in backend folder)*
